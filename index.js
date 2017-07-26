@@ -24,32 +24,11 @@ function colorBackground(current_cell){
 	else{
 		current_cell.style.backgroundColor=bgcol[Math.log(current_cell.innerHTML)/Math.log(2)];
 		if (current_cell.innerHTML=="2048"||current_cell.innerHTML=='4096'){
-			// $( ".grid-container" ).fadeTo( "slow" , 0.7);
-			// var win_msg=document.createElement('div');
-			// win_msgid="win_msg";
-			// win_msg.position="fixed";
-			// win_msg.style.backgroundColor="#ebc500";
-			// $(".grid-container").append(win_msg);
-			// win_msg.innerHTML='You won';
-			// $("#win_msg").style.display;
 			var modal = document.getElementById('myModal');
 			modal.style.display = "block";
 
-			// window.onclick = function(event) {
-			//     if (event.target == modal) {
-			//         modal.style.display = "none";
-			//     }
-			// }
 			var win_msg=document.getElementById("win_msg");
 			win_msg.style.visibility='visible';
-			// win_msg.style.top=document.body.scrollHeight;
-			
-			// document.body.addEventListener('keydown',function(event){
-			// 	event.preventDefault();
-			// 	if (event.code=='ArrowDown'||event.code=='ArrowUp'||event.code=='ArrowRight'||event.code=='ArrowLeft'){
-			// 		event.preventDefault();
-			// 	}
-			// });
 			won=true;
 			prevent_default();
 		}
@@ -67,7 +46,6 @@ function countBlank(){
 			count_blank++;
 		}
 	}
-	// console.log(blanks);
 	if (count_blank>0){
 		return blanks;
 	}else {
@@ -82,13 +60,11 @@ function randomNumberGenerator(){
 	else{
 		new_number=4;
 	}
-	console.log(new_number);
 	return new_number;
 }
 function randomPositionGenerator(){
 	blanks=countBlank();
 	var new_position=blanks[Math.floor(Math.random()*blanks.length)];
-	console.log(new_position);
 	return new_position;
 }
 function randomNumberAtRandomPosition(){
@@ -127,7 +103,6 @@ function moveBlanksToOppositeDirection(direction,current_row_no){
 	if (direction=="right"){
 		var start=current_row_no*4;
 		var end=current_row_no*4+3;
-		// var i=end;
 		while (end>=start){
 			if (cell[start].innerHTML=="")
 			{
@@ -137,9 +112,6 @@ function moveBlanksToOppositeDirection(direction,current_row_no){
 				end--;
 			}
 			else{
-				// var temp=cell[end].innerHTML;
-				// cell[end].innerHTML=cell[start].innerHTML;
-				// cell[start].innerHTML=temp;
 				var i=end;
 				for (;i>start;i--)
 				{
@@ -190,7 +162,6 @@ function mergeTwoSameOnes(direction,current_row_no){
 		while (end>start&&cell[end].innerHTML!=""){
 			if (cell[end].innerHTML==cell[end-1].innerHTML){
 				var new_val=2*cell[end].innerHTML
-				// console.log(new_val)
 				newscore= parseInt(oldscore)+parseInt(new_val);
 				hohoscore.innerHTML=newscore;
 				cell[end].innerHTML=new_val
@@ -210,7 +181,6 @@ function mergeTwoSameOnes(direction,current_row_no){
 		while (start>end&&cell[end].innerHTML!=""){
 			if (cell[end].innerHTML==cell[end+1].innerHTML){
 				var new_val=2*cell[end].innerHTML
-				// console.log(new_val)
 				newscore= parseInt(oldscore)+parseInt(new_val);
 				hohoscore.innerHTML=newscore;
 				cell[end].innerHTML=new_val
@@ -236,7 +206,6 @@ function moveRightLeft(direction){
 			moveBlanksToOppositeDirection(direction,current_row_no);
 		}
 		mergeTwoSameOnes(direction,current_row_no);
-		// moveBlanksToOppositeDirection(direction,current_row_no);
 		blanks_in_row=findBlanksInRow(current_row_no);
 		if (blanks_in_row.length>0){
 			moveBlanksToOppositeDirection(direction,current_row_no);
@@ -278,10 +247,10 @@ function moveBlanksToOppositeDirectionColumn(direction,current_column_no){
 		var start=current_column_no;
 		while (Math.floor(end/no_of_cols)>Math.floor(start/no_of_cols)){
 			if (cell[start].innerHTML==""){
-				start=start+no_of_cols;//(Math.sqrt(cell.length));
+				start=start+no_of_cols;
 			}
 			else if (cell[end].innerHTML!="") {
-				end-=no_of_cols;//(Math.sqrt(cell.length));
+				end-=no_of_cols;
 			}
 			else{
 				var i=end;
@@ -308,7 +277,6 @@ function mergeTwoSameOnesColumn(direction,current_column_no){
 		var start=12+current_column_no;
 		var end=current_column_no;
 		while (start>end&&cell[end].innerHTML!=""){
-		// while (Math.floor(start/no_of_cols)>=Math.floor(end/no_of_cols)){
 			if (cell[end].innerHTML==cell[end+4].innerHTML){
 				var new_val=2*cell[end].innerHTML;
 				newscore= parseInt(oldscore)+parseInt(new_val);
@@ -350,7 +318,6 @@ function moveUpDown(direction){
 	for (var current_column_no=0;current_column_no<4;current_column_no++)
 	{
 		blanks_in_column=findBlanksInColumn(current_column_no);
-		console.log(blanks_in_column);
 		if (blanks_in_column.length>0){
 			moveBlanksToOppositeDirectionColumn(direction,current_column_no);
 		}
@@ -387,18 +354,7 @@ function shift(event){
 	}
 }
 document.body.addEventListener('keydown',shift);
-// if (won==false){
-// 	document.body.addEventListener('keydown',shift);
-// }
-// else{
-// 	console.log("yoho");
-// 	document.body.addEventListener('keydown',function(event){
-// 		event.preventDefault();
-// 	});
-// }
 start();
 countBlank();
-// randomNumberGenerator();
-// randomPositionGenerator();
 randomNumberAtRandomPosition();
 
