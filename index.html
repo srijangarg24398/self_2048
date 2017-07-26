@@ -8,7 +8,7 @@
 	<header class="site-header">
 		<div id="title">
 			<h1 id="header-left">2048</h1>
-			<p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
+			<p><span class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></span></p>
 		</div>
 		<div id="header-right">
 			<h6>SCORE</h6>
@@ -17,6 +17,17 @@
 	</header>
 	<section>
 		<div class="grid-container">
+			<div id="myModal" class="modal">
+			  <div class="modal-content">
+			    <div class="modal-body">
+			    	<h1>You Win!</h1>
+			    </div>
+			  </div>
+			</div>
+
+
+		<div id="win_msg"><h1>You Win!</h1></div>
+
 			<div class="grid-row">
 			   	<div class="grid-cell"></div>
 			   	<div class="grid-cell"></div>
@@ -53,4 +64,5 @@
 	</footer>
 </body>
 <script type="text/javascript" src="index.js"></script>
+<!-- <script type="text/javascript" src="additional.js"></script> -->
 </html>
