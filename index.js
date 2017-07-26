@@ -354,6 +354,62 @@ function shift(event){
 	}
 }
 document.body.addEventListener('keydown',shift);
+function shiftMobile(event){
+	if (won==false){
+		if (event.code=='ArrowDown'){
+			event.preventDefault();
+			moveUpDown("down");
+		}
+	    if (event.code=='ArrowUp'){
+			event.preventDefault();
+			moveUpDown("up")
+		}
+		if (event.code=='ArrowRight'){
+			event.preventDefault();
+			moveRightLeft("right")
+		}
+		if (event.code=='ArrowLeft'){
+			event.preventDefault();
+			moveRightLeft("left");
+		}
+	}
+	else{
+		prevent_default();
+	}
+}
+var startX;
+var startY;
+document.body.addEventListener('touchstart',function(event){
+	touchobj = event.changedTouches[0];
+	startX=parseInt(touchobj.clientX);
+	startY=parseInt(touchobj.clientY);
+});
+var endX;
+var endY;
+document.body.addEventListener('touchmove',function(event){
+	touchobj = event.changedTouches[0];
+	endX=parseInt(touchobj.clientX);
+	endY=parseInt(touchobj.clientY);
+});
+document.body.addEventListener('touchend',function(event){
+	touchobj = event.changedTouches[0];
+	var distX=startX - endX;
+	var distY=startY - endY;
+	if (Math.abs(distX)>Math.abs(distY)){
+		if (distX>50){
+			moveRightLeft("left");
+
+		}else if (distX<-50){
+			moveRightLeft("right")
+		}
+	}else{
+		if (distY>50){
+			moveUpDown("up")
+		}else if (distY<-50){
+			moveUpDown("down");
+		}
+	}
+});
 start();
 countBlank();
 randomNumberAtRandomPosition();

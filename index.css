@@ -134,7 +134,9 @@ div#win_msg{
 	height: 475px;
 	background-color: #ebc500;
 }
-
+span#change_acc_to_devise:after{
+	content: "arrow keys ";
+}
 .modal {
     display: none;
     position: absolute;
@@ -262,7 +264,9 @@ div#win_msg{
 		width: 745px;
 		height: 757px;
 	}
-
+	span#change_acc_to_devise:after{
+		content: "touch pad";
+	}
 	.modal {
 	    padding-top: 100px;
 	    width: 746px;
