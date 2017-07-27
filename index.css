@@ -134,6 +134,20 @@ div#win_msg{
 	height: 475px;
 	background-color: #ebc500;
 }
+div#lost_msg{
+	display: flex;
+	visibility: hidden;
+	justify-content: center;
+	align-items: center;
+	visibility: none;
+	position: absolute;
+	z-index: 1;
+	opacity: 0.5;
+	font-size: 40px;
+	width: 475px;
+	height: 475px;
+	background-color: #ebc500;
+}
 span#change_acc_to_devise:after{
 	content: "arrow keys ";
 }
@@ -260,6 +274,11 @@ span#change_acc_to_devise:after{
 		margin-top: 50px;
 	}
 	div#win_msg{
+		font-size: 40px;
+		width: 745px;
+		height: 757px;
+	}
+	div#lost_msg{
 		font-size: 40px;
 		width: 745px;
 		height: 757px;

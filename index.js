@@ -1,4 +1,18 @@
+var can_move_top=true;
+var can_move_bottom=true;
+var can_move_right=true;
+var can_move_left=true;
 var won=false;
+function lostWorld(){
+	if (can_move_top==false && can_move_bottom==false && can_move_right==false && can_move_left==false){
+		var lostModal = document.getElementById('myLostModal');
+		lostModal.style.display = "block";
+
+		var lost_msg=document.getElementById("lost_msg");
+		lost_msg.style.visibility='visible';
+		prevent_default();
+	}
+}
 function prevent_default(){
 	document.body.addEventListener('keydown',function(event){
 		if (event.code=='ArrowDown'||event.code=='ArrowUp'||event.code=='ArrowRight'||event.code=='ArrowLeft'){
@@ -196,23 +210,50 @@ function mergeTwoSameOnes(direction,current_row_no){
 	}
 	
 }
+function compareBlanks(blanks1,blanks2){ //returns true if blanks are unchanged
+	var result=true;
+	if (blanks1.length==blanks2.length){
+		for (var i=0;i<blanks1.length;i++){
+			if (blanks1[i]!=blanks2[i]){
+				result=result && false;
+			}
+		}
+	}
+	return result;
+}
 function moveRightLeft(direction){
 	var row=document.getElementsByClassName("grid-row");
 	var cell=document.getElementsByClassName("grid-cell");
+	var condn1=false;
+	var condn2=false;
 	for (var current_row_no=0;current_row_no<4;current_row_no++)
 	{
-		blanks_in_row=findBlanksInRow(current_row_no);
-		if (blanks_in_row.length>0){
+		blanks_in_row1=findBlanksInRow(current_row_no);
+		if (blanks_in_row1.length>0){
 			moveBlanksToOppositeDirection(direction,current_row_no);
 		}
+		blanks_in_row2=findBlanksInRow(current_row_no);
 		mergeTwoSameOnes(direction,current_row_no);
-		blanks_in_row=findBlanksInRow(current_row_no);
-		if (blanks_in_row.length>0){
+		condn1=condn1 || !compareBlanks(blanks_in_row1,blanks_in_row2);
+		blanks_in_row3=findBlanksInRow(current_row_no);
+		if (blanks_in_row3.length>0){
 			moveBlanksToOppositeDirection(direction,current_row_no);
 		}
-		
+		condn2=condn2||!compareBlanks(blanks_in_row2,blanks_in_row3);
 	}
-	randomNumberAtRandomPosition();
+	if (condn1==true ||condn2==true){
+		can_move_left=true;
+		can_move_right=true;
+		randomNumberAtRandomPosition();
+	}else{
+		if (direction=="left"){
+			can_move_left=false;
+		}
+		if (direction=="right"){
+			can_move_right=false;
+		}
+		lostWorld();
+	}
 }
 
 function moveBlanksToOppositeDirectionColumn(direction,current_column_no){
@@ -315,20 +356,37 @@ function mergeTwoSameOnesColumn(direction,current_column_no){
 function moveUpDown(direction){
 	var row=document.getElementsByClassName("grid-row");
 	var cell=document.getElementsByClassName("grid-cell");
+	var condn1=false;
+	var condn2=false;
 	for (var current_column_no=0;current_column_no<4;current_column_no++)
 	{
-		blanks_in_column=findBlanksInColumn(current_column_no);
-		if (blanks_in_column.length>0){
+		blanks_in_column1=findBlanksInColumn(current_column_no);
+		if (blanks_in_column1.length>0){
 			moveBlanksToOppositeDirectionColumn(direction,current_column_no);
 		}
+		blanks_in_column2=findBlanksInColumn(current_column_no);
+		condn1=condn1 || !compareBlanks(blanks_in_column1,blanks_in_column2);
 		mergeTwoSameOnesColumn(direction,current_column_no);
-		blanks_in_column=findBlanksInColumn(current_column_no);
-		if (blanks_in_column.length>0){
+		blanks_in_column3=findBlanksInColumn(current_column_no);
+		if (blanks_in_column3.length>0){
 			moveBlanksToOppositeDirectionColumn(direction,current_column_no);
 		}
-		
+		condn2=condn2||!compareBlanks(blanks_in_column2,blanks_in_column3);
 	}
-	randomNumberAtRandomPosition();
+	if (condn1==true ||condn2==true){
+		can_move_top=true;
+		can_move_bottom=true;
+		randomNumberAtRandomPosition();
+	}else{
+		// countBlank();
+		if (direction=="up"){
+			can_move_top=false;
+		}
+		if (direction=='down'){
+			can_move_bottom=false;
+		}
+		lostWorld();
+	}
 }
 function shift(event){
 	if (won==false){
